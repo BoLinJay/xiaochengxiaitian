@@ -1,0 +1,23 @@
+.hoveShadow() {
+    transition: all .5;
+    &:hover {
+        transform: translate3d(0, -3px, 0);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.2);;
+    }
+}
+.fadeAnimation() {
+    .fade-right-enter-to,
+    .fade-right-leave-from{
+    opacity: 1;
+    transform: none;
+    }
+    .fade-right-enter-active,
+    .fade-right-leave-active{
+    transition: all .5s;
+    }
+    .fade-right-enter-from,
+    .fade-right-leave-to{
+    opacity: 0;
+    transform: translateX(20px)
+    }
+}
