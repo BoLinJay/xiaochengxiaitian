@@ -22,7 +22,7 @@
             <!-- 数量组件 -->
             <Numbox v-model="num" label="数量" max="999" />
             <!-- 按钮 -->
-            <Button type="primary" style="margin-top:20px;">加入购物车</Button>
+            <Button type="primary" style="margin-top:20px;" @click="insertCart">加入购物车</Button>
           </div>
       </div>
       <!-- 商品推荐 -->
@@ -59,8 +59,10 @@ import GoodsSku from './component/GoodsSku.vue'
 import GoodsTabs from './component/GoodsTabs.vue'
 import GoodsHot from './component/GoodsHot.vue'
 import GoodsWarn from './component/GoodsWarn.vue'
+import Message from '@/components/Plugins/Message'
 import { useRoute } from 'vue-router'
 import { nextTick, provide, ref, watch } from 'vue'
+import { useStore } from 'vuex'
 
 // 获取商品数据
 const useGoods = () => {
@@ -98,12 +100,40 @@ export default {
        goods.value.oldPrice = sku.oldPrice
        goods.value.inventory = sku.inventory
      }
+      currSku.value = sku
    }
     // 数量数据
     const num = ref(1)
-  // 使用provide向后代传数据
+    // 使用provide向后代传数据
     provide('goods', goods)
-   return { goods, changeSku, num }
+    const store = useStore()
+    const currSku = ref(null)
+    // 添加购物车按钮
+    const insertCart = () => {
+      // 判断是否选中商品
+      if(!currSku.value) {
+        Message({text: '请选择完成的商品规格'})
+      }
+      if(num.value > goods.inventory) {
+        Message({text: '库存不足'})
+      }
+      store.dispatch('cart/insertCart', {
+        id: goods.value.id,
+        skuId: currSku.value.skuId,
+        name: goods.value.name,
+        picture: goods.value.mainPictures[0],
+        price: currSku.value.price,
+        nowPrice: currSku.value.price,
+        count: num.value,
+        attrsText: currSku.value.specsText,
+        selected: true,
+        isEffective: true,
+        stock: currSku.value.inventory
+      }).then(() => {
+        Message({text: '加入购物车成功'})
+      })
+    }
+   return { goods, changeSku, num, insertCart }
   }
   
 }
