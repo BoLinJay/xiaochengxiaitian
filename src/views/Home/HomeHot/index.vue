@@ -7,7 +7,7 @@
       <transition name="fade" mode="">
         <ul v-if="goods.length" class="goods-list">
         <li v-for="item in goods" :key="item.id">
-          <RouterLink to="/">
+          <RouterLink :to="`/product/${item.id}`">
             <img v-lazyload="item.picture" alt="">
             <p class="name">{{item.title}}</p>
             <p class="desc">{{item.alt}}</p>

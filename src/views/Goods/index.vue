@@ -20,7 +20,7 @@
             <!-- sku组件 -->
             <GoodsSku :goods="goods" @change="changeSku" />
             <!-- 数量组件 -->
-            <Numbox v-model="num" label="数量" max="999" />
+            <NumBox v-model="num" label="数量" max="999" />
             <!-- 按钮 -->
             <Button type="primary" style="margin-top:20px;" @click="insertCart">加入购物车</Button>
           </div>

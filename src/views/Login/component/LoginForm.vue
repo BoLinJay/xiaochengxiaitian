@@ -156,10 +156,12 @@ export default {
        // 登录成功后拿到用户信息并存储到本地
       const { id, account, nickname, avatar, token, mobile } = data.result
       store.commit('user/setUser', { id, account, nickname, avatar, token, mobile })
-        // 2. 提示
+      store.dispatch('cart/mergeCart').then(()=> {
+           // 2. 提示
       Message({ form: 'success', text: '登录成功' })
         // 3. 跳转
       router.push(store.state.user.redirectUrl)
+      })
       } 
     } 
     return { isMsgLogin, form, schema: mySchema, formCom, login, time, send }

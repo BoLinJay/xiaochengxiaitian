@@ -9,7 +9,7 @@
         <More />
       </template>
       <div class="box">
-        <RouterLink class="cover" to="/">
+        <RouterLink class="cover" :to="`/product/${item.id}`">
           <img v-lazyload="item.picture" alt="">
           <strong class="label">
             <span>{{item.name}} </span>

@@ -1,7 +1,7 @@
 <!-- 产品模块右侧单个图片模块 -->
 <template>
   <div class="goods-item">
-    <RouterLink to="/" class="image">
+    <RouterLink :to="`/product/${goods.id}`" class="image">
       <img v-lazyload="goods.picture" alt="" />
     </RouterLink>
     <p class="name ellipsis-2">{{goods.name}}</p>

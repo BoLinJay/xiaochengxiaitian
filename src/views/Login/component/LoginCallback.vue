@@ -54,7 +54,8 @@ export default {
               // 登录成功
               const { id, account, avatar, mobile, nickname, token } = data.result
               store.commit('user/setUser', { id, account, avatar, mobile, nickname, token })
-              router.push(store.state.user.redirectUrl)
+                // 2. 跳转到来源页或者首页
+                router.push(store.state.user.redirectUrl)
             }).catch(e => {
               // 登录失败，需要注册
               isBind.value = false

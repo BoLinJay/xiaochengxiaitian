@@ -1,12 +1,12 @@
 <template>
   <div class="cart">
-    <a class="curr" href="javascript:;">
+    <router-link class="curr" to="/cart" >
       <i class="iconfont icon-cart"></i><em>{{$store.getters['cart/validTotal']}}</em>
-    </a>
-    <div class="layer">
+    </router-link>
+    <div class="layer" v-if="$route.path !== '/cart' && $store.getters['cart/validTotal'] > 0">
       <div class="list">
         <div class="item" v-for="goods in $store.getters['cart/validList']" :key="goods.skuId">
-          <RouterLink to="">
+          <RouterLink :to="`/product/${goods.id}`">
             <img  :src="goods.picture" alt="">
             <div class="center">
               <p class="name ellipsis-2">{{goods.name}}</p>
@@ -17,7 +17,7 @@
               <p class="count">x{{goods.count}}</p>
             </div>
           </RouterLink>
-          <i class="iconfont icon-close-new"></i>
+          <i @click="deleteCart(goods.skuId) " class="iconfont icon-close-new"></i>
         </div>
       </div>
       <div class="foot">
@@ -25,16 +25,23 @@
           <p>共 {{$store.getters['cart/validTotal']}}</p>
           <p>&yen;{{$store.getters['cart/validAmount']}}</p>
         </div>
-        <Button type="plain">去购物车结算</Button>
+        <Button type="plain" @click="$router.push('/cart')">去购物车结算</Button>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { useStore } from 'vuex'
 export default {
   name: 'AppHeaderCart',
   setup() {
-
+    const store = useStore()
+    store.dispatch('cart/findGetList')
+    // 删除购物车
+    const deleteCart = (skuId) => {
+      store.dispatch('cart/deleteCart', skuId)
+    }
+    return { deleteCart }
   }
 }
 </script>

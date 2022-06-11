@@ -11,7 +11,7 @@
 <script>
 import { useVModel } from '@vueuse/core'
 export default {
-  name: 'Numbox',
+  name: 'NumBox',
    props: {
         label: {
         type: String,

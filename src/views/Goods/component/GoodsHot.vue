@@ -2,7 +2,7 @@
   <div class="goods-hot">
     <h3>{{title}}</h3>
      <div v-if="goodsList">
-      <GoodsItem v-for="item in goodsList" :key="item.id" :goods="item"/>  
+      <GoodsItem v-for="item in goodsList" :key="item.id" :goods="item" :path="`/product/${item.id}`" />  
     </div>  
   </div>
 </template>

@@ -25,7 +25,7 @@ export default {
     const changeChecked = () => {
       checked.value = !checked.value
         // 使用emit通知父组件数据的改变
-      emit('update:modelValue', checked.value)
+      emit('change', checked.value)
     }
     return { checked, changeChecked }
   }

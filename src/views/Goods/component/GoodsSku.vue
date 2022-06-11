@@ -9,21 +9,6 @@
         </template>
       </dd>
     </dl>
-    <!-- <dl>
-      <dt>尺寸</dt>
-      <dd>
-        <span class="disabled">10英寸</span>
-        <span class="selected">20英寸</span>
-        <span>30英寸</span>
-      </dd>
-    </dl> -->
-    <!-- <dl>
-      <dt>版本</dt>
-      <dd>
-        <span>美版</span>
-        <span>港版</span>
-      </dd>
-    </dl> -->
   </div>
 </template>
 <script>
@@ -86,8 +71,13 @@ export default {
    goods: {
       type: Object,
       default: () => {}
+   },
+   skuId: {
+     type:String,
+     default:''
    }
   },
+  // emits: ['change'],
   setup(props, { emit }) {
      const specs = reactive(computed(() => {
       return props.goods.specs
