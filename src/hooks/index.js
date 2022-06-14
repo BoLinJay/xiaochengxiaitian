@@ -1,7 +1,8 @@
 // 复用逻辑函数
 // hooks 封装逻辑，提供响应式数据。
-import { useIntersectionObserver } from '@vueuse/core'
-import { ref } from 'vue'
+import { useIntersectionObserver, useIntervalFn } from '@vueuse/core'
+import dayjs from 'dayjs'
+import { onUnmounted, ref } from 'vue'
 
 // 数据懒加载函数
 export const useLazyData = (apiFn) => {
@@ -26,4 +27,38 @@ export const useLazyData = (apiFn) => {
   )
   // 返回--->数据（dom,后台数据）
   return { target, result }
+}
+
+
+/**
+ * 订单支付倒计时函数
+ * 
+ */
+export const usepayTime = () => {
+  const time = ref(0)
+  const timeText = ref('')
+  const { pause, resume} = useIntervalFn(()=> {
+    time.value--
+    timeText.value = dayjs.unix(time.value).format('mm秒ss分')
+    if(time.value <= 0) {
+      pause()
+    }
+  }, 1000, false)
+
+  const start = (countDown) => {
+    if(countDown > -1) {
+      time.value = countDown
+      timeText.value = dayjs.unix(time.value).format('mm秒ss分')
+      resume()
+    }
+  }
+
+  onUnmounted(()=> {
+    pause()
+  })
+  return {
+    start,
+    timeText,
+    time
+  }
 }

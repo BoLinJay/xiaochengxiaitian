@@ -76,3 +76,27 @@ export const getNewCartGoods = (skuId) => {
  export const checkAllCart = ({ selected, ids }) => {
   return request('/member/cart/selected', 'put', { selected, ids })
 }
+
+/**
+ * 添加收货地址信息
+ * @param {Object} address - 地址对象
+ */
+ export const addAddress = (address) => {
+  return request('/member/address', 'post', address)
+}
+
+/**
+ * 编辑收货地址信息
+ * @param {Object} address - 地址对象
+ */
+ export const editAddress = (address, id) => {
+  return request(`/member/address/${id}`, 'put', address)
+}
+
+/**
+ * 提交订单
+ * @param {Object} order - 订单信息对象
+ */
+ export const createOrder = (order) => {
+  return request('/member/order', 'post', order)
+}

@@ -229,7 +229,7 @@ export default {
     },
     // 有效商品总金额
     validAmount (state, getters) {
-      return getters.validList.reduce((p, c) => p + c.nowPrice * 100 * c.count, 0) / 100
+      return getters.validList.reduce((p, c) => p + Math.round(c.nowPrice * 100 * c.count), 0) / 100
     },
     //无效商品的列表
     invalidList(state) {
@@ -245,7 +245,7 @@ export default {
     },
     // 选中商品的总金额
     selectedMoney(state, getters) {
-      return getters.selectedList.reduce((t, v) => t + (v.nowPrice * v.count * 100), 0) / 100
+      return getters.selectedList.reduce((t, v) => t + Math.round(v.nowPrice * v.count * 100), 0) / 100
     },
     // 全选
     changeAll(state, getters) {

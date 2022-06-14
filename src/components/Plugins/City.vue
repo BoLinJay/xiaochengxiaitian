@@ -1,7 +1,7 @@
 <template>
   <div class="xtx-city" ref="target">
     <div class="select" @click="toggleDialog" :class="{active}">
-      <span class="placeholder"></span>
+      <span v-if="!fullLocation" class="placeholder">{{placeholder}} </span>
       <span class="value">{{fullLocation}}</span>
       <i class="iconfont icon-angle-down"></i>
     </div>
@@ -42,7 +42,11 @@ export default {
       fullLocation: {
         type: Object,
         default: () => {}
-      }
+      },
+      placeholder: {
+      type: String,
+      default: '请选择所在地区'
+    }
     },
     setup(prop, { emit }) {
             // 城市数据

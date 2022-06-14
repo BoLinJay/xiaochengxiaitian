@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { Form, Field } from 'vee-validate'
 import {userAccountLogin, userMobileLogin, userMobileLoginMsg} from '@/api/user' 
 import schema from '@/utils/vee-validate-schema'
@@ -77,6 +77,7 @@ import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import Message from '@/components/Plugins/Message'
 import { useIntervalFn } from '@vueuse/core'
+import { findCartList } from '@/api/cart'
 export default {
     name: 'LoginForm',
     components: { Form, Field },
@@ -161,6 +162,7 @@ export default {
       Message({ form: 'success', text: '登录成功' })
         // 3. 跳转
       router.push(store.state.user.redirectUrl)
+      store.dispatch('cart/findCart')
       })
       } 
     } 

@@ -31,7 +31,7 @@
           <More :path="`/category/sub/${item.id}`" />
         </div>
         <div class="body">
-          <GoodsItem v-for="g in item.goods" :key="g.id" :goods="g" />
+          <GoodsItem v-for="g in item.goods" :key="g.id" :goods="g" :path="`/product/${g.id}`" />
         </div>
       </div>
     </div>

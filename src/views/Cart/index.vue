@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <!-- 有效商品 -->
-          <tbody>
+          <tbody >
             <tr v-for="item in $store.getters['cart/validList']" :key="item.skuId">
               <td><Checkbox @change="($event)=>changeOne(item.skuId, $event)" :modelValue="item.selected"/></td>
               <td>
@@ -49,6 +49,7 @@
               </td>
             </tr>
           </tbody>
+         
           <!-- 无效商品 -->
           <tbody v-if="$store.getters['cart/invalidList'].length>0">
             <tr><td colspan="6"><h3 class="tit" >失效商品</h3></td></tr>
@@ -74,6 +75,8 @@
           </tbody>
         </table>
       </div>
+       <!-- 没有东西 -->
+          <CartNone v-if="$store.state.cart.list.length == 0" />
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
@@ -85,7 +88,7 @@
         <div class="total">
           共 {{$store.getters['cart/validTotal']}} 件商品，已选择 {{$store.getters['cart/selectedNum']}} 件，商品合计：
           <span class="red">¥{{$store.getters['cart/selectedMoney']}}</span>
-          <Button type="primary">下单结算</Button>
+          <Button type="primary" @click="payMent">下单结算</Button>
         </div>
       </div>
       <!-- 猜你喜欢 -->
@@ -101,11 +104,14 @@ import Navbar from '@/components/Navbar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Confirm from '@/components/Plugins/Confirm'
-import { useStore } from 'vuex'
 import CartSku from './Components/CartSku'
+import Message from '@/components/Plugins/Message.js'
+import CartNone from './Components/CartNone'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   name: 'CartPage',
-  components: { GoodRelevant, Header, Footer, CartSku, Navbar },
+  components: { GoodRelevant, Header, Footer, CartSku, Navbar, CartNone },
   setup() {
     const store = useStore()
     // 单选框
@@ -148,10 +154,26 @@ export default {
     const updateCartSku = (oldSkuId, newSku) => {
       store.dispatch('cart/updateCartSku', { oldSkuId, newSku })
     }
-    return { changeOne, checkAll, delOne, deleteSelected, delInvalidList, changeCount, updateCartSku }
+    // 下单结算 
+    const router = useRouter()
+    const payMent = () => {
+      if(store.getters['cart/selectedList'].length === 0) {
+        Message({text: '至少选中一件商品'})
+      }
+      if(!store.state.user.profile.token) {
+          Confirm({ text: '下单结算需要登录，您是否去登录？' }).then(() => {
+          // 点击确认
+          router.push('/member/checkout')
+        }).catch(e => {})
+      } else {
+        router.push('/member/checkout')
+      }
+    }
+    return { changeOne, checkAll, delOne, deleteSelected, delInvalidList, changeCount, updateCartSku, payMent }
   }
 }
 </script>
+
 <style scoped lang="less">
 .tc {
   text-align: center;

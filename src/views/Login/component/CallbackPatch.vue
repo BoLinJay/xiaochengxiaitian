@@ -98,7 +98,7 @@ export default {
         // 通过
         if (time.value === 0) {
         // 没有倒计时才可以发送
-          await userQQPatchCode(form.mobile)
+          await userQQPatchCode(form)
           Message({ type: 'success', text: '发送成功' })
           time.value = 60
           resume()
@@ -126,7 +126,6 @@ export default {
           // 3. 成功提示
           Message({ type: 'success', text: 'QQ完善信息成功' })
           })
-        
       }).catch(e => {
          Message({ type: 'error', text: '完善信息失败' })
       })
