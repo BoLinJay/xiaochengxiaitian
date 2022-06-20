@@ -8,4 +8,5 @@ import UI from '@/components/Plugins'
 import 'normalize.css'
 // 自己定义的样式库
 import '@/assets/styles/common.less'
+import './Mock'
 createApp(App).use(store).use(router).use(UI).mount('#app')

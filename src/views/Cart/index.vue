@@ -1,7 +1,4 @@
 <template>
-<!-- 头 -->
-    <Navbar/>
-    <Header/>
   <div class="xtx-cart-page">
     <div class="container">
       <Bread>
@@ -95,14 +92,9 @@
       <GoodRelevant />
     </div>
   </div>
-  <!-- 尾 -->
-  <Footer/>
 </template>
 <script>
 import GoodRelevant from '@/views/Goods/component/GoodsRelevant'
-import Navbar from '@/components/Navbar'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Confirm from '@/components/Plugins/Confirm'
 import CartSku from './Components/CartSku'
 import Message from '@/components/Plugins/Message.js'
@@ -111,7 +103,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 export default {
   name: 'CartPage',
-  components: { GoodRelevant, Header, Footer, CartSku, Navbar, CartNone },
+  components: { GoodRelevant, CartSku, CartNone },
   setup() {
     const store = useStore()
     // 单选框
