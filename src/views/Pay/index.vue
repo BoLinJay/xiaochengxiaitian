@@ -79,24 +79,40 @@
 <script>
 import CheckoutAddress from './components/address'
 import { reactive, ref } from 'vue'
-import { findCheckoutInfo } from '@/api/pay'
+import { findCheckoutInfo, findOrderRepurchase } from '@/api/pay'
 import Message from '@/components/Plugins/Message'
 import { createOrder } from '@/api/cart'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 export default {
   name: 'PayCheckoutPage',
   components:{ CheckoutAddress },
   setup() {
+      const route = useRoute()
       const checkoutInfo = ref(null)
-      findCheckoutInfo().then(data => {
-        checkoutInfo.value = data.result
-        requestParams.goods = data.result.goods.map(item => {
-          return {
-            skuId: item.skuId,
-            count: item.count
-            }
+      if(route.query.id) {
+        // 再次购买结算
+        findOrderRepurchase(route.query.id).then(data => {
+          checkoutInfo.value = data.result
+           requestParams.goods = data.result.goods.map(item => {
+            return {
+              skuId: item.skuId,
+              count: item.count
+              }
+          })
         })
-      })
+      } else {
+        // 购物车结算
+           findCheckoutInfo().then(data => {
+          checkoutInfo.value = data.result
+          requestParams.goods = data.result.goods.map(item => {
+            return {
+              skuId: item.skuId,
+              count: item.count
+              }
+          })
+        })
+      }
+   
        // 提交订单所携带的数据/字段
       const requestParams = reactive({
         addressId: null,

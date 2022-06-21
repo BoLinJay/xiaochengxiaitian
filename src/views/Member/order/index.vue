@@ -100,7 +100,7 @@ export default {
   }
 }
 // 取消订单
-const useCanel = ()  => {
+export const useCanel = ()  => {
   const target = ref(null)
   const onCancelOrder = (goods) => {
     target.value.open(goods)
@@ -108,12 +108,12 @@ const useCanel = ()  => {
   return { onCancelOrder , target }
 }
  // 确认收货
- const ConfirmOrder = () => {
+ export const ConfirmOrder = () => {
     const onConfirmOrder = (goods) => {
       Confirm({text: '确认收货吗?'}).then(()=> {
          confirmOrder(goods.id).then(()=> {
            Message({text:'收货成功'})
-           params.orderState = 4
+           goods.orderState = 4
       })
       }).catch(()=>{
 
@@ -123,7 +123,7 @@ const useCanel = ()  => {
     return { onConfirmOrder }
  }
 //  查看物流
-const getOrderLogistics = () => {
+export const getOrderLogistics = () => {
   const OrderLogistics = ref(null)
   const onOrderLogistics = (order) => {
     OrderLogistics.value.open(order)

@@ -24,8 +24,7 @@ const routes = [
               component: { render: () => h(<RouterView/>) } ,
               children: [
               { path: '', component: () => import('@/views/Member/order')},
-              { path: ':id', component: () => import('@/views/Member/order/component/orderDetail')}
-
+              { path: ':id', component: () => import('@/views/Member/order/detail')}
               ]
                 
             }

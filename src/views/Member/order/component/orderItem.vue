@@ -49,9 +49,9 @@
         <!-- 已取消：查看详情 -->
             <Button v-if="goods.orderState===1" type="primary" size="small" @click="$router.push(`/member/pay?orderId=${goods.id}`)">立即付款</Button>
             <Button v-if="goods.orderState===3" type="primary" size="small" @click="$emit('on-confirm-order', goods)">确认收货</Button>
-            <p><a href="javascript:;">查看详情</a></p>
+            <p><router-link :to="`/member/order/${goods.id}`">查看详情</router-link></p>
             <p v-if="goods.orderState===1" @click="$emit('on-cancel-order', goods)"><a href="javascript:;">取消订单</a></p>
-            <p v-if="[2,3,4,5].includes(goods.orderState)"><a href="javascript:;">再次购买</a></p>
+            <p v-if="[2,3,4,5].includes(goods.orderState)"><a href="javascript:;" @click="$router.push(`/member/checkout?id=${goods.id}`)">再次购买</a></p>
             <p v-if="[4,5].includes(goods.orderState)"><a href="javascript:;">申请售后</a></p>
           </div>
         </div>
