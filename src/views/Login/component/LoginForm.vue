@@ -90,8 +90,8 @@ export default {
     // 表单信息对象
     const form = reactive({
       isAgree: true,
-      account: null,
-      password: null,
+      account: 'jay1124',
+      password: '123456',
       mobile: null,
       code: null
     })
